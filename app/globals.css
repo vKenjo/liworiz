@@ -16,7 +16,19 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: 'Crimson Text', serif;
+  font-size: 20px;
+  line-height: 1.8;
   background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png");
+}
+
+/* Increase paragraph sizes */
+p {
+  font-size: 1.15rem;
+}
+
+/* Increase list item sizes */
+li {
+  font-size: 1.1rem;
 }
 
 .title-font {

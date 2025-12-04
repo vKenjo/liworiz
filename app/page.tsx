@@ -2,6 +2,17 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 
+// Import new components
+import RequiredElements from './components/RequiredElements';
+import WaveTimeline from './components/WaveTimeline';
+import Childhood from './components/Childhood';
+import SaAkingMgaKababata from './components/SaAkingMgaKababata';
+import LaJuventudFilipina from './components/LaJuventudFilipina';
+import MalolosLetter from './components/MalolosLetter';
+import LaLigaFilipina from './components/LaLigaFilipina';
+import DapitanExile from './components/DapitanExile';
+import Execution from './components/Execution';
+
 // --- TYPES ---
 interface Character {
   initials: string;
@@ -244,37 +255,6 @@ const ScrollReveal = ({ children, className = "" }: { children: React.ReactNode,
   );
 };
 
-// Navigation Component
-const Navbar = () => {
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-[#1a1a2e]/98 py-3' : 'bg-gradient-to-r from-[#1a1a2e] to-[#16213e] py-4'}`} 
-         style={{ boxShadow: '0 4px 20px rgba(0,0,0,0.3)' }}>
-      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-        <a href="#" className="title-font text-xl text-[#C9A227] tracking-widest">RIZAL</a>
-        <ul className="hidden md:flex gap-8">
-          {['About', 'Noli', 'Fili', 'Último', 'Legacy'].map((item) => (
-            <li key={item}>
-              <a href={`#${item.toLowerCase()}`} 
-                 className="text-gray-200 hover:text-[#C9A227] transition-colors relative group">
-                {item === 'Último' ? 'Mi Último Adiós' : item === 'Noli' ? 'Noli Me Tangere' : item === 'Fili' ? 'El Filibusterismo' : item}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#C9A227] group-hover:w-full transition-all duration-300"></span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </nav>
-  );
-};
-
 // Section Header Component
 const SectionHeader = ({ label, title, subtitle, light = false }: { label: string, title: string, subtitle?: string, light?: boolean }) => (
   <div className="text-center mb-16">
@@ -375,7 +355,7 @@ const LifeTimelineItem = ({ item, index }: { item: typeof LIFE_TIMELINE[0], inde
 );
 
 export default function RizalTimelinePage() {
-  const [activeSection, setActiveSection] = useState('roadmap');
+  const [activeSection, setActiveSection] = useState('about');
 
   return (
     <div className="min-h-screen bg-[#FDF6E3]">
@@ -404,9 +384,6 @@ export default function RizalTimelinePage() {
         }
         html { scroll-behavior: smooth; }
       `}</style>
-
-      {/* Navigation */}
-      <Navbar />
 
       {/* Hero Section */}
       <section className="min-h-screen bg-gradient-to-br from-[#1a1a2e] via-[#16213e] to-[#722F37] flex items-center justify-center text-center px-6 pt-24 pb-16 relative overflow-hidden">
@@ -445,15 +422,16 @@ export default function RizalTimelinePage() {
       </section>
 
       {/* Section Navigation */}
-      <div className="sticky top-16 z-40 bg-[#FDF6E3] border-b border-[#C9A227]/20 py-4">
-        <div className="max-w-7xl mx-auto px-6 flex justify-center gap-4 flex-wrap">
+      <div className="sticky top-0 z-40 flex justify-center py-4">
+        <div className="bg-white border-2 border-[#C9A227]/30 rounded-full px-6 py-3 shadow-xl flex gap-3 flex-wrap">
           {[
-            { id: 'about', label: 'About Rizal' },
-            { id: 'roadmap', label: 'Timeline Roadmap' },
-            { id: 'noli', label: 'Noli Me Tangere' },
-            { id: 'fili', label: 'El Filibusterismo' },
+            { id: 'about', label: 'About' },
+            { id: 'required-elements', label: 'Overview' },
+            { id: 'wave-timeline', label: 'Timeline' },
+            { id: 'childhood', label: 'Childhood' },
+            { id: 'noli', label: 'Noli' },
+            { id: 'fili', label: 'El Fili' },
             { id: 'ultimo', label: 'Mi Último Adiós' },
-            { id: 'legacy', label: 'Legacy' },
           ].map((tab) => (
             <button
               key={tab.id}
@@ -462,8 +440,8 @@ export default function RizalTimelinePage() {
                 document.getElementById(tab.id)?.scrollIntoView({ behavior: 'smooth' });
               }}
               className={`px-4 py-2 rounded-full text-sm title-font transition-all ${
-                activeSection === tab.id 
-                  ? 'bg-[#1a1a2e] text-[#C9A227]' 
+                activeSection === tab.id
+                  ? 'bg-[#1a1a2e] text-[#C9A227]'
                   : 'bg-transparent text-[#1a1a2e] hover:bg-[#1a1a2e]/10'
               }`}
             >
@@ -518,7 +496,7 @@ export default function RizalTimelinePage() {
                     { title: 'Reformist', desc: 'Advocated for peaceful reform' },
                   ].map((item) => (
                     <div key={item.title} className="bg-white p-4 rounded-xl shadow-lg text-center border-t-4 border-[#C9A227]">
-                      <h4 className="title-font text-[#1a1a2e] mb-1">{item.title}</h4>
+                      <h4 className="title-font text-[#1a1a2e] mb-1 break-words">{item.title}</h4>
                       <p className="text-sm text-gray-600">{item.desc}</p>
                     </div>
                   ))}
@@ -529,111 +507,12 @@ export default function RizalTimelinePage() {
         </div>
       </section>
 
-      {/* Journey of Rizal - Redesigned Timeline Section */}
-      <section id="roadmap" className="py-24 px-6 bg-[#F5F5DC] scroll-mt-24">
-        <div className="max-w-6xl mx-auto">
-          <ScrollReveal>
-            <SectionHeader 
-              label="A Life of Purpose" 
-              title="The Journey of José Rizal" 
-              subtitle="From his birth in Calamba to his martyrdom at Bagumbayan — every moment shaped a nation"
-            />
-          </ScrollReveal>
-
-          {/* Category Legend */}
-          <ScrollReveal>
-            <div className="flex flex-wrap justify-center gap-3 mb-16 text-sm">
-              <span className="px-4 py-2 bg-amber-50 border-l-4 border-amber-500 text-amber-700 rounded-r">🌅 Birth</span>
-              <span className="px-4 py-2 bg-blue-50 border-l-4 border-blue-500 text-blue-700 rounded-r">🎓 Education</span>
-              <span className="px-4 py-2 bg-red-50 border-l-4 border-red-600 text-red-700 rounded-r">⚡ Awakening</span>
-              <span className="px-4 py-2 bg-emerald-50 border-l-4 border-emerald-600 text-emerald-700 rounded-r">📚 Literature</span>
-              <span className="px-4 py-2 bg-indigo-50 border-l-4 border-indigo-600 text-indigo-700 rounded-r">✊ Activism</span>
-              <span className="px-4 py-2 bg-purple-50 border-l-4 border-purple-500 text-purple-700 rounded-r">🏝️ Exile</span>
-              <span className="px-4 py-2 bg-gray-900 border-l-4 border-yellow-500 text-yellow-500 rounded-r">🇵🇭 Martyrdom</span>
-            </div>
-          </ScrollReveal>
-
-          {/* Timeline Events */}
-          <div className="space-y-8">
-            {RIZAL_JOURNEY.map((event, index) => {
-              const style = CATEGORY_STYLES[event.category];
-              const isMartyrdom = event.category === 'martyrdom';
-              
-              return (
-                <ScrollReveal key={event.id}>
-                  <div 
-                    className={`
-                      ${style.bg} 
-                      ${isMartyrdom ? 'text-white' : 'text-gray-800'}
-                      rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 border-l-[6px] ${style.border}
-                      ${isMartyrdom ? 'border-2 border-yellow-500' : ''}
-                    `}
-                  >
-                    {/* Header */}
-                    <div className={`px-6 py-4 flex items-center gap-4 ${isMartyrdom ? 'bg-gray-800' : 'bg-white/50'}`}>
-                      <span className="text-3xl">{style.icon}</span>
-                      <div className="flex-1">
-                        <span className={`text-sm font-semibold ${style.accent} uppercase tracking-wider`}>{event.year}</span>
-                        <h3 className={`text-xl md:text-2xl title-font font-bold ${isMartyrdom ? 'text-yellow-400' : 'text-[#1a1a2e]'}`}>
-                          {event.title}
-                        </h3>
-                      </div>
-                      <span className={`hidden md:block px-3 py-1 rounded-full text-xs font-medium capitalize ${isMartyrdom ? 'bg-yellow-500 text-gray-900' : `${style.bg} ${style.accent} border ${style.border}`}`}>
-                        {event.category}
-                      </span>
-                    </div>
-                    
-                    {/* Content */}
-                    <div className="px-6 py-6">
-                      <p className={`leading-relaxed text-base mb-4 ${isMartyrdom ? 'text-gray-200' : 'text-gray-700'}`}>
-                        {event.description}
-                      </p>
-                      
-                      {/* Significance Box */}
-                      <div className={`rounded-lg p-4 ${isMartyrdom ? 'bg-yellow-500/10 border border-yellow-500/30' : 'bg-white/70 border border-gray-200'}`}>
-                        <h4 className={`text-sm font-bold uppercase tracking-wider mb-2 ${isMartyrdom ? 'text-yellow-400' : style.accent}`}>
-                          Historical Significance
-                        </h4>
-                        <p className={`text-sm leading-relaxed ${isMartyrdom ? 'text-gray-300' : 'text-gray-600'}`}>
-                          {event.significance}
-                        </p>
-                      </div>
-                      
-                      {/* Quote if exists */}
-                      {event.quote && (
-                        <blockquote className={`mt-4 pl-4 border-l-4 italic ${isMartyrdom ? 'border-yellow-500 text-yellow-200' : `${style.border} ${style.accent}`}`}>
-                          {event.quote}
-                        </blockquote>
-                      )}
-                    </div>
-                    
-                    {/* Timeline Connector */}
-                    {index < RIZAL_JOURNEY.length - 1 && (
-                      <div className="flex justify-center -mb-4 pb-4">
-                        <div className={`w-0.5 h-8 ${isMartyrdom ? 'bg-yellow-500' : 'bg-gray-300'}`}></div>
-                      </div>
-                    )}
-                  </div>
-                </ScrollReveal>
-              );
-            })}
-          </div>
-
-          {/* Closing Quote */}
-          <ScrollReveal>
-            <div className="mt-16 text-center bg-[#1a1a2e] text-white rounded-2xl p-10 shadow-2xl">
-              <div className="text-4xl mb-4">🇵🇭</div>
-              <p className="font-playfair text-2xl md:text-3xl italic mb-4 text-[#C9A227]">
-                &quot;The youth is the hope of our future.&quot;
-              </p>
-              <p className="text-gray-400">— José Rizal</p>
-              <div className="mt-6 text-sm text-gray-500">
-                December 30 is Rizal Day — a national holiday commemorating his sacrifice
-              </div>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
+      {/* NEW SECTIONS */}
+      <RequiredElements />
+      <WaveTimeline />
+      <Childhood />
+      <SaAkingMgaKababata />
+      <LaJuventudFilipina />
 
       {/* Noli Me Tangere Section */}
       <section id="noli" className="py-24 px-6 bg-gradient-to-br from-[#1a1a2e] to-[#2d132c] text-white scroll-mt-24">
@@ -749,6 +628,8 @@ export default function RizalTimelinePage() {
           </div>
         </div>
       </section>
+
+      <MalolosLetter />
 
       {/* El Filibusterismo Section */}
       <section id="fili" className="py-24 px-6 bg-gradient-to-br from-[#722F37] to-[#4a0e0e] text-white scroll-mt-24">
@@ -901,6 +782,9 @@ export default function RizalTimelinePage() {
         </div>
       </section>
 
+      <LaLigaFilipina />
+      <DapitanExile />
+
       {/* Mi Último Adiós Section */}
       <section id="ultimo" className="py-24 px-6 bg-gradient-to-br from-[#1B4332] to-[#081c15] text-white scroll-mt-24">
         <div className="max-w-6xl mx-auto">
@@ -1039,8 +923,10 @@ export default function RizalTimelinePage() {
         </div>
       </section>
 
-      {/* Legacy Section */}
-      <section id="legacy" className="py-24 px-6 bg-[#F5E6D3] scroll-mt-24">
+      <Execution />
+
+      {/* Legacy Section REMOVED */}
+      <section id="legacy-removed" className="py-24 px-6 bg-[#F5E6D3] scroll-mt-24" style={{display: 'none'}}>
         <div className="max-w-6xl mx-auto">
           <ScrollReveal>
             <SectionHeader 

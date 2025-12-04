@@ -40,20 +40,24 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({ children, className = "" })
 export default function WaveTimeline() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
-  const getYPosition = (position: 'high' | 'mid' | 'low'): number => {
-    switch (position) {
-      case 'high': return 20;
-      case 'mid': return 50;
-      case 'low': return 80;
-    }
+  // Calculate Y position with growth trend - using almost full viewBox height (200)
+  const getYPosition = (index: number, position: 'high' | 'mid' | 'low'): number => {
+    const totalPoints = WAVE_TIMELINE.length - 1;
+    // Overall growth: start at 175 (near bottom), end at 25 (near top)
+    const baseGrowth = 175 - (index / totalPoints) * 150;
+
+    // Dramatic variation based on position (triumphs/setbacks)
+    const variation = position === 'high' ? -25 : position === 'low' ? 25 : 0;
+
+    return baseGrowth + variation;
   };
 
   const getMarkerStyle = (type: string) => {
     switch (type) {
-      case 'triumph': return { symbol: '◆', color: 'bg-emerald-500', border: 'border-emerald-500' };
-      case 'setback': return { symbol: '▼', color: 'bg-red-500', border: 'border-red-500' };
-      case 'martyrdom': return { symbol: '★', color: 'bg-yellow-500', border: 'border-yellow-500' };
-      default: return { symbol: '●', color: 'bg-blue-500', border: 'border-blue-500' };
+      case 'triumph': return { symbol: '◆', color: 'text-emerald-500', bgColor: 'bg-emerald-500', border: 'border-emerald-500' };
+      case 'setback': return { symbol: '▼', color: 'text-red-500', bgColor: 'bg-red-500', border: 'border-red-500' };
+      case 'martyrdom': return { symbol: '★', color: 'text-yellow-500', bgColor: 'bg-yellow-500', border: 'border-yellow-500' };
+      default: return { symbol: '●', color: 'text-blue-500', bgColor: 'bg-blue-500', border: 'border-blue-500' };
     }
   };
 
@@ -80,55 +84,29 @@ export default function WaveTimeline() {
           </div>
         </ScrollReveal>
 
-        {/* Legend */}
-        <ScrollReveal>
-          <div className="flex flex-wrap justify-center gap-4 mb-12 text-sm">
-            <div className="flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow">
-              <span className="text-emerald-500">◆</span>
-              <span>Triumphs</span>
-            </div>
-            <div className="flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow">
-              <span className="text-red-500">▼</span>
-              <span>Setbacks</span>
-            </div>
-            <div className="flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow">
-              <span className="text-blue-500">●</span>
-              <span>Milestones</span>
-            </div>
-            <div className="flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow">
-              <span className="text-yellow-500">★</span>
-              <span>Martyrdom</span>
-            </div>
-          </div>
-        </ScrollReveal>
-
         {/* Timeline Visualization */}
         <ScrollReveal>
-          <div className="relative bg-white rounded-xl shadow-xl p-8 md:p-12 overflow-x-auto">
+          <div className="relative bg-white rounded-xl shadow-xl p-4 md:p-6 overflow-x-auto">
             {/* SVG Wave Timeline */}
-            <svg viewBox="0 0 1400 200" className="w-full h-48 md:h-64" preserveAspectRatio="xMidYMid meet">
-              {/* Horizontal reference lines */}
-              <line x1="0" y1="20" x2="1400" y2="20" stroke="#e5e7eb" strokeWidth="1" strokeDasharray="5,5" />
-              <line x1="0" y1="50" x2="1400" y2="50" stroke="#e5e7eb" strokeWidth="1" strokeDasharray="5,5" />
-              <line x1="0" y1="80" x2="1400" y2="80" stroke="#e5e7eb" strokeWidth="1" strokeDasharray="5,5" />
-
-              {/* Wave path connecting points */}
+            <svg viewBox="0 0 1400 200" className="w-full h-80 md:h-96" preserveAspectRatio="xMidYMid meet">
+              {/* Wave path connecting points - with smooth curve */}
               <path
                 d={WAVE_TIMELINE.map((point, i) => {
                   const x = (i / (WAVE_TIMELINE.length - 1)) * 1300 + 50;
-                  const y = getYPosition(point.position);
+                  const y = getYPosition(i, point.position);
                   return `${i === 0 ? 'M' : 'L'} ${x} ${y}`;
                 }).join(' ')}
                 fill="none"
                 stroke="#C9A227"
                 strokeWidth="3"
                 strokeLinecap="round"
+                strokeLinejoin="round"
               />
 
               {/* Timeline points */}
               {WAVE_TIMELINE.map((point, index) => {
                 const x = (index / (WAVE_TIMELINE.length - 1)) * 1300 + 50;
-                const y = getYPosition(point.position);
+                const y = getYPosition(index, point.position);
                 const markerStyle = getMarkerStyle(point.type);
 
                 return (
@@ -137,11 +115,11 @@ export default function WaveTimeline() {
                     <circle
                       cx={x}
                       cy={y}
-                      r={hoveredIndex === index ? 8 : 6}
-                      className={markerStyle.color}
+                      r={hoveredIndex === index ? 10 : 7}
+                      className={markerStyle.bgColor}
                       fill="currentColor"
                       stroke="white"
-                      strokeWidth="2"
+                      strokeWidth="3"
                       style={{ cursor: 'pointer', transition: 'all 0.3s' }}
                       onMouseEnter={() => setHoveredIndex(index)}
                       onMouseLeave={() => setHoveredIndex(null)}
@@ -151,11 +129,11 @@ export default function WaveTimeline() {
                     {/* Year label */}
                     <text
                       x={x}
-                      y={y > 50 ? y - 15 : y + 20}
+                      y={y + 25}
                       textAnchor="middle"
                       className="text-xs font-semibold"
                       fill="#1a1a2e"
-                      style={{ fontSize: '11px' }}
+                      style={{ fontSize: '12px', pointerEvents: 'none' }}
                     >
                       {point.year}
                     </text>
@@ -164,18 +142,13 @@ export default function WaveTimeline() {
               })}
             </svg>
 
-            {/* Position labels - aligned with graph (matching y=20, 50, 80 from viewBox) */}
-            <div className="absolute left-2 text-xs text-gray-500 font-semibold" style={{top: '10%'}}>HIGH</div>
-            <div className="absolute left-2 text-xs text-gray-500 font-semibold" style={{top: '25%'}}>MID</div>
-            <div className="absolute left-2 text-xs text-gray-500 font-semibold" style={{top: '40%'}}>LOW</div>
-
-            {/* Tooltip/Info on hover */}
+            {/* Tooltip/Info on hover - AT BOTTOM */}
             {hoveredIndex !== null && (
-              <div className="mt-8 bg-gradient-to-r from-[#1a1a2e] to-[#16213e] text-white p-4 rounded-lg shadow-lg">
+              <div className="mt-6 bg-gradient-to-r from-[#1a1a2e] to-[#16213e] text-white p-4 rounded-lg shadow-lg">
                 <div className="flex items-start justify-between">
                   <div>
                     <div className="flex items-center gap-2 mb-1">
-                      <span className={`${getMarkerStyle(WAVE_TIMELINE[hoveredIndex].type).color} text-white px-2 py-0.5 rounded text-xs font-bold`}>
+                      <span className={`${getMarkerStyle(WAVE_TIMELINE[hoveredIndex].type).bgColor} text-white px-2 py-0.5 rounded text-xs font-bold`}>
                         {WAVE_TIMELINE[hoveredIndex].year}
                       </span>
                       <span className="title-font text-lg text-[#C9A227]">

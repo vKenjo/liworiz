@@ -357,6 +357,40 @@ const LifeTimelineItem = ({ item, index }: { item: typeof LIFE_TIMELINE[0], inde
 export default function RizalTimelinePage() {
   const [activeSection, setActiveSection] = useState('about');
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = [
+        'about',
+        'required-elements',
+        'wave-timeline',
+        'childhood',
+        'noli',
+        'fili',
+        'ultimo',
+      ];
+
+      const scrollPosition = window.scrollY + 200; // Offset for navbar height
+
+      for (const sectionId of sections) {
+        const section = document.getElementById(sectionId);
+        if (section) {
+          const sectionTop = section.offsetTop;
+          const sectionBottom = sectionTop + section.offsetHeight;
+
+          if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+            setActiveSection(sectionId);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Call once on mount
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <div className="min-h-screen bg-[#FDF6E3]">
       

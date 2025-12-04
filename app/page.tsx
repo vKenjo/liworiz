@@ -261,14 +261,14 @@ const SectionHeader = ({ label, title, subtitle, light = false }: { label: strin
   <div className="text-center mb-16">
     <p className={`italic text-sm tracking-[3px] uppercase mb-2 ${light ? 'text-[#C9A227]' : 'text-[#C9A227]'}`}>{label}</p>
     <h2 className={`title-font text-3xl md:text-4xl mb-4 ${light ? 'text-white' : 'text-[#1a1a2e]'}`}>{title}</h2>
-    <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-[#C9A227] to-transparent mx-auto mb-4"></div>
+    <div className="w-24 h-0.5 bg-linear-to-r from-transparent via-[#C9A227] to-transparent mx-auto mb-4"></div>
     {subtitle && <p className={`text-lg italic max-w-xl mx-auto ${light ? 'text-gray-300' : 'text-gray-600'}`}>{subtitle}</p>}
   </div>
 );
 
 // Book Cover Component
 const BookCover = ({ title, subtitle, year, location }: { title: string, subtitle: string, year: string, location: string }) => (
-  <div className="bg-gradient-to-br from-[#C9A227] to-[#D4AF37] p-2 rounded-lg shadow-2xl">
+  <div className="bg-linear-to-br from-[#C9A227] to-[#D4AF37] p-2 rounded-lg shadow-2xl">
     <div className="bg-[#f5f5f5] h-[400px] rounded flex flex-col items-center justify-center p-8 text-center">
       <h3 className="title-font text-xl text-[#1a1a2e] mb-2">{title}</h3>
       <p className="italic text-gray-600 text-sm">&quot;{subtitle}&quot;</p>
@@ -283,7 +283,7 @@ const BookCover = ({ title, subtitle, year, location }: { title: string, subtitl
 // Character Card Component
 const CharacterCard = ({ character }: { character: Character }) => (
   <div className="bg-white/10 backdrop-blur rounded-xl p-6 text-center border border-white/10 hover:bg-white/15 hover:scale-[1.02] transition-all">
-    <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#C9A227] to-[#D4AF37] mx-auto mb-4 flex items-center justify-center title-font text-2xl text-[#1a1a2e]">
+    <div className="w-20 h-20 rounded-full bg-linear-to-br from-[#C9A227] to-[#D4AF37] mx-auto mb-4 flex items-center justify-center title-font text-2xl text-[#1a1a2e]">
       {character.initials}
     </div>
     <h4 className="title-font text-lg mb-1">{character.name}</h4>
@@ -323,7 +323,7 @@ const QuoteSection = ({ quote, cite }: { quote: string, cite: string }) => (
 // Legacy Card Component
 const LegacyCard = ({ icon, title, description }: { icon: string, title: string, description: string }) => (
   <div className="bg-white rounded-xl p-8 text-center shadow-lg hover:-translate-y-2 transition-transform">
-    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#1a1a2e] to-[#722F37] mx-auto mb-6 flex items-center justify-center text-2xl">
+    <div className="w-16 h-16 rounded-full bg-linear-to-br from-[#1a1a2e] to-[#722F37] mx-auto mb-6 flex items-center justify-center text-2xl">
       {icon}
     </div>
     <h3 className="title-font text-lg text-[#1a1a2e] mb-3">{title}</h3>
@@ -421,7 +421,7 @@ export default function RizalTimelinePage() {
       `}</style>
 
       {/* Hero Section */}
-      <section className="min-h-screen bg-gradient-to-br from-[#1a1a2e] via-[#16213e] to-[#722F37] flex items-center justify-center text-center px-6 pt-24 pb-16 relative overflow-hidden">
+      <section className="min-h-screen bg-linear-to-br from-[#1a1a2e] via-[#16213e] to-[#722F37] flex items-center justify-center text-center px-6 pt-24 pb-16 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10" style={{
           backgroundImage: 'radial-gradient(circle at 20% 80%, rgba(201, 162, 39, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(139, 0, 0, 0.3) 0%, transparent 50%)'
         }}></div>
@@ -487,7 +487,7 @@ export default function RizalTimelinePage() {
       </div>
 
       {/* About Rizal Section */}
-      <section id="about" className="py-24 px-6 bg-gradient-to-b from-[#FDF6E3] to-[#F5E6D3] scroll-mt-24">
+      <section id="about" className="py-24 px-6 bg-linear-to-b from-[#FDF6E3] to-[#F5E6D3] scroll-mt-24">
         <div className="max-w-6xl mx-auto">
           <ScrollReveal>
             <SectionHeader 
@@ -499,7 +499,7 @@ export default function RizalTimelinePage() {
 
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <ScrollReveal>
-              <div className="bg-gradient-to-br from-[#C9A227] to-[#D4AF37] p-4 rounded-xl shadow-2xl">
+              <div className="bg-linear-to-br from-[#C9A227] to-[#D4AF37] p-4 rounded-xl shadow-2xl">
                 <div className="bg-[#1a1a2e] h-[450px] rounded-lg flex items-center justify-center overflow-hidden">
                   <img 
                     src="/JoseRizal.jpeg" 
@@ -531,7 +531,7 @@ export default function RizalTimelinePage() {
                     { title: 'Reformist', desc: 'Advocated for peaceful reform' },
                   ].map((item) => (
                     <div key={item.title} className="bg-white p-4 rounded-xl shadow-lg text-center border-t-4 border-[#C9A227]">
-                      <h4 className="title-font text-[#1a1a2e] mb-1 break-words">{item.title}</h4>
+                      <h4 className="title-font text-[#1a1a2e] mb-1 wrap-break-word">{item.title}</h4>
                       <p className="text-sm text-gray-600">{item.desc}</p>
                     </div>
                   ))}
@@ -550,7 +550,7 @@ export default function RizalTimelinePage() {
       <LaJuventudFilipina />
 
       {/* Noli Me Tangere Section */}
-      <section id="noli" className="py-24 px-6 bg-gradient-to-br from-[#1a1a2e] to-[#2d132c] text-white scroll-mt-24">
+      <section id="noli" className="py-24 px-6 bg-linear-to-br from-[#1a1a2e] to-[#2d132c] text-white scroll-mt-24">
         <div className="max-w-6xl mx-auto">
           <ScrollReveal>
             <SectionHeader 
@@ -667,7 +667,7 @@ export default function RizalTimelinePage() {
       <MalolosLetter />
 
       {/* El Filibusterismo Section */}
-      <section id="fili" className="py-24 px-6 bg-gradient-to-br from-[#722F37] to-[#4a0e0e] text-white scroll-mt-24">
+      <section id="fili" className="py-24 px-6 bg-linear-to-br from-[#722F37] to-[#4a0e0e] text-white scroll-mt-24">
         <div className="max-w-6xl mx-auto">
           <ScrollReveal>
             <SectionHeader 
@@ -821,7 +821,7 @@ export default function RizalTimelinePage() {
       <DapitanExile />
 
       {/* Mi Último Adiós Section */}
-      <section id="ultimo" className="py-24 px-6 bg-gradient-to-br from-[#1B4332] to-[#081c15] text-white scroll-mt-24">
+      <section id="ultimo" className="py-24 px-6 bg-linear-to-br from-[#1B4332] to-[#081c15] text-white scroll-mt-24">
         <div className="max-w-6xl mx-auto">
           <ScrollReveal>
             <SectionHeader 
@@ -989,7 +989,7 @@ export default function RizalTimelinePage() {
           <h3 className="title-font text-xl text-center text-[#1a1a2e] mb-12">Timeline of Rizal&apos;s Life & Works</h3>
           <div className="relative">
             {/* Timeline Line */}
-            <div className="absolute left-5 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#C9A227] to-[#722F37] -translate-x-1/2"></div>
+            <div className="absolute left-5 md:left-1/2 top-0 bottom-0 w-0.5 bg-linear-to-b from-[#C9A227] to-[#722F37] -translate-x-1/2"></div>
             
             {LIFE_TIMELINE.map((item, index) => (
               <LifeTimelineItem key={item.date} item={item} index={index} />
@@ -999,7 +999,7 @@ export default function RizalTimelinePage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gradient-to-br from-[#1a1a2e] to-[#16213e] text-white py-16 px-6 text-center">
+      <footer className="bg-linear-to-br from-[#1a1a2e] to-[#16213e] text-white py-16 px-6 text-center">
         <ScrollReveal>
           <p className="font-playfair italic text-xl md:text-2xl max-w-2xl mx-auto mb-8 opacity-90">
             &quot;He who does not know how to look back at where he came from will never get to his destination.&quot;

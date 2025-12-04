@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 
+
 // Import new components
 import RequiredElements from './components/RequiredElements';
 import WaveTimeline from './components/WaveTimeline';

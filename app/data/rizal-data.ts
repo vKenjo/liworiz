@@ -188,3 +188,27 @@ export const EXECUTION_THEMES: Theme[] = [
   { title: 'Tragic Irony', description: 'Charged with inspiring revolution he opposed, showing how even reformist ideas become revolutionary in oppressive contexts.' },
   { title: 'Eternal Legacy', description: 'His death achieved what his life could not—unifying Filipinos across ideological divides in the fight for independence.' },
 ];
+
+// --- BRACKEN CONTROVERSY THEMES ---
+export const BRACKEN_THEMES: Theme[] = [
+  { title: 'Personal Defiance', description: 'Rizal maintained his relationship with Josephine despite family opposition and clerical conditions requiring retraction.' },
+  { title: 'Church vs. Conscience', description: 'The refusal to marry without retraction exposed how colonial religious authority controlled personal life decisions.' },
+  { title: 'Public vs. Private Morality', description: 'Critics used the relationship to question Rizal\'s moral consistency, showing how personal choices became political attacks.' },
+  { title: 'Family Conflict', description: 'The Rizal family\'s opposition to Josephine revealed tensions between personal happiness and familial expectations during colonial oppression.' },
+];
+
+// --- ELITISM THEMES ---
+export const ELITISM_THEMES: Theme[] = [
+  { title: 'Ilustrado Class Bias', description: 'Rizal\'s education at Ateneo and UST instilled European standards of refinement that shaped his views on social hierarchy.' },
+  { title: 'Education as Measure of Worth', description: 'He often equated lack of education with social inferiority, linking dignity and freedom to formal schooling.' },
+  { title: 'Colonial Mentality Internalized', description: 'His praise of European discipline while criticizing local customs reflected internalized colonial standards of civilization.' },
+  { title: 'Reformist Limitations', description: 'His elite perspective shaped a reformism that appealed to educated classes but sometimes overlooked the masses\' immediate struggles.' },
+];
+
+// --- WOMEN CONTROVERSY THEMES ---
+export const WOMEN_CONTROVERSY_THEMES: Theme[] = [
+  { title: 'Paternalistic Expectations', description: 'Rizal applied strict European bourgeois standards of virtue to Filipina women, expecting piety, reserve, and self-sacrifice.' },
+  { title: 'Double Standards', description: 'He placed moral burden on women as guardians of national virtue while male behavior received less scrutiny.' },
+  { title: 'Tension with Later Advocacy', description: 'His critical tone toward women\'s behavior contrasted with his later praise of the Malolos women, revealing evolving but conflicted views.' },
+  { title: 'Women as Nation-Builders', description: 'Despite paternalism, he ultimately recognized women\'s education as essential for national liberation—a progressive stance for his era.' },
+];
